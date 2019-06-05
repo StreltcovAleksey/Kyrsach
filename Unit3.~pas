@@ -1,0 +1,62 @@
+unit Unit3;
+
+interface
+
+uses
+  Windows, Messages, SysUtils, Variants, Classes, Graphics, Controls, Forms,
+  Dialogs, Grids, DBGrids, Buttons, ExtCtrls, DB, DBTables;
+
+type
+  TForm3 = class(TForm)
+    DataSource1: TDataSource;
+    Qk: TQuery;
+    ControlBar1: TControlBar;
+    BtnCancelVr1: TSpeedButton;
+    BtnSaveVr1: TSpeedButton;
+    BtnDelVr1: TSpeedButton;
+    BtnEditVr1: TSpeedButton;
+    BtnAddVr1: TSpeedButton;
+    DBGridVrach: TDBGrid;
+    ButtonOk: TSpeedButton;
+    ButtonCancel: TSpeedButton;
+    procedure GetKab();
+    procedure ButtonOkClick(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+    Qtxt: string;
+   vozv_id2: integer;
+  vozv_name2: string;
+  end;
+
+var
+  Form3: TForm3;
+
+implementation
+
+procedure TForm3.GetKab();
+Begin
+Qtxt:=
+'Select KabID, NameK '+
+'From Kab';
+With Qk do begin Sql.Clear; Sql.Add(Qtxt); Open; end;
+end;
+
+{$R *.dfm}
+
+procedure TForm3.ButtonOkClick(Sender: TObject);
+begin
+If Qk.Eof then Exit;
+  vozv_id2:= Qk['KabID'];
+  vozv_name2:= Qk['NameK'];
+  Close;
+end;
+
+procedure TForm3.FormActivate(Sender: TObject);
+begin
+getkab();
+end;
+
+end.
